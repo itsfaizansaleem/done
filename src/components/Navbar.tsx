@@ -12,8 +12,8 @@ export default function Navbar() {
           </Link>
           
           <div className="hidden md:flex items-center gap-8 text-[10px] uppercase tracking-[0.2em] text-white/50">
-            <Link to="/explore" className="hover:text-white transition-colors">Marketplace</Link>
-            <Link to="/categories" className="hover:text-white transition-colors">Collections</Link>
+            <Link to="/" className="hover:text-white transition-colors">Marketplace</Link>
+            <Link to="/account" className="hover:text-white transition-colors">My Account</Link>
             <Link to="/pricing" className="hover:text-white transition-colors">Studio</Link>
           </div>
         </div>
@@ -34,9 +34,12 @@ export default function Navbar() {
               <ShoppingCart className="h-4 w-4 text-white/60 group-hover:text-white" />
             </button>
             
-            <button className="hidden sm:block px-6 py-2 border border-white/20 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300">
+            <a 
+              href="https://accounts.faizansaleem.studio/sign-in"
+              className="hidden sm:block px-6 py-2 border border-white/20 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300"
+            >
               Account
-            </button>
+            </a>
           </div>
           
           <button className="md:hidden text-white/60">

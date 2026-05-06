@@ -110,7 +110,7 @@ export default function CheckoutPage() {
                     <div className="flex justify-between items-end border-b border-white/5 pb-4">
                       <div>
                         <p className="text-[8px] font-bold text-white/20 uppercase tracking-[0.4em] mb-2">Account Name</p>
-                        <p className="text-lg font-serif italic text-white">Faizan Saleem</p>
+                        <p className="text-lg font-serif italic text-white">Usman Akbar</p>
                       </div>
                     </div>
                     
