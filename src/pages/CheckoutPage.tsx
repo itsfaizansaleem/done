@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft, CheckCircle2, MessageCircle, Copy, Wallet } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, MessageCircle, Copy, Wallet, LogIn } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { db, auth, signInWithGoogle, collection, addDoc, serverTimestamp, handleFirestoreError, OperationType } from '../lib/firebase';
 
 export default function CheckoutPage() {
   const location = useLocation();
@@ -13,11 +14,55 @@ export default function CheckoutPage() {
     email: '',
     phone: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleNext = (e: React.FormEvent) => {
+  const handleNext = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.email && formData.phone) {
-      setStep(2);
+    if (!auth.currentUser) {
+      try {
+        await signInWithGoogle();
+      } catch (error) {
+        return; // User cancelled or error
+      }
+    }
+
+    if (formData.email && formData.phone && auth.currentUser) {
+      setIsSubmitting(true);
+      try {
+        // Save to Firebase
+        const orderData = {
+          userId: auth.currentUser.uid,
+          email: formData.email,
+          phone: formData.phone,
+          productName: product.name,
+          price: product.price,
+          status: 'processing',
+          createdAt: serverTimestamp()
+        };
+        
+        await addDoc(collection(db, 'orders'), orderData);
+
+        // Send to Formspree as backup
+        await fetch("https://formspree.io/f/xaqaokak", {
+          method: "POST",
+          body: JSON.stringify({
+            ...formData,
+            userId: auth.currentUser.uid,
+            product: product.name,
+            price: product.price,
+            timestamp: new Date().toISOString()
+          }),
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        
+        setStep(2);
+      } catch (error) {
+        handleFirestoreError(error, OperationType.CREATE, 'orders');
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -87,9 +132,11 @@ export default function CheckoutPage() {
                   </div>
                   <button 
                     type="submit"
-                    className="px-10 py-5 bg-white text-black font-bold text-[10px] uppercase tracking-[0.3em] hover:bg-neutral-200 transition-all"
+                    disabled={isSubmitting}
+                    className="px-10 py-5 bg-white text-black font-bold text-[10px] uppercase tracking-[0.3em] hover:bg-neutral-200 transition-all disabled:opacity-50 flex items-center gap-2"
                   >
-                    Proceed to payment
+                    {!auth.currentUser && <LogIn className="h-4 w-4" />}
+                    {isSubmitting ? 'Processing...' : (!auth.currentUser ? 'Sign in & Pay' : 'Proceed to payment')}
                   </button>
                 </div>
               </form>

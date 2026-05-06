@@ -10,7 +10,7 @@ const MOCK_PRODUCTS: Product[] = [
     description: 'Get full access to Canva Pro features including millions of premium templates, stock photos, and advanced design tools. No monthly fees, lifetime access with continuous updates.',
     price: 500,
     category: 'Subscription',
-    imageUrl: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&auto=format&fit=crop',
+    imageUrl: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1200&auto=format&fit=crop',
     author: 'Faizan Digital',
     fileSize: 'N/A',
     format: 'Account Access'

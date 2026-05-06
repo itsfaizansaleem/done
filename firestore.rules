@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Pillar 2: Validation Blueprint (The "Anti-Update-Gap")
+    function isValidOrder(data) {
+      return data.keys().hasAll(['userId', 'email', 'phone', 'productName', 'price', 'status', 'createdAt']) &&
+             data.keys().size() == 7 &&
+             // Pillar 2: Identity Integrity
+             data.userId is string && data.userId == request.auth.uid &&
+             // Pillar 2: Type Safety & Boundary Limits
+             data.email is string && data.email.size() <= 256 &&
+             data.phone is string && data.phone.size() <= 32 &&
+             data.productName is string && data.productName.size() <= 256 &&
+             data.price is number && data.price >= 0 &&
+             data.status in ['processing', 'completed', 'cancelled'] &&
+             // Pillar 10: Temporal Integrity
+             data.createdAt == request.time;
+    }
+
+    match /orders/{orderId} {
+      // Create: user must be signed in and data must match schema
+      allow create: if isSignedIn() && 
+                      isValidOrder(request.resource.data);
+      
+      // Read: user can only see their own orders
+      // Pillar 8: Secure List Queries (The "Query Enforcer")
+      allow get, list: if isSignedIn() && 
+                        resource.data.userId == request.auth.uid;
+      
+      // Updates and deletes are forbidden for users to maintain audit trail
+      allow update, delete: if false;
+    }
+  }
+}
