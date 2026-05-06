@@ -7,24 +7,13 @@ const MOCK_PRODUCTS: Product[] = [
   {
     id: 'canva-pro',
     name: 'Canva Pro Lifetime',
-    description: 'Get full access to Canva Pro features including millions of premium templates, stock photos, and advanced design tools. No monthly fees, lifetime access with continuous updates.',
+    description: 'Get full access to Canva Pro features including millions of premium templates (100M+), stock photos, high-end videos, and advanced design tools like Magic Resize, Background Remover, and Brand Kits. This is a one-time activation for your personal email, providing lifetime access without any monthly or yearly subscriptions. Perfect for designers, marketers, and business owners looking to scale their creative output.',
     price: 500,
     category: 'Subscription',
     imageUrl: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=800&auto=format&fit=crop',
-    author: 'Faizan Digital',
+    author: 'Faizan Digital Solutions',
     fileSize: 'N/A',
-    format: 'Account Access'
-  },
-  {
-    id: '1',
-    name: 'Neo-Abstract Vector Pack',
-    description: 'A collection of 25 high-end abstract vector compositions for modern branding. Perfect for background elements, social media graphics, and textile design. Each piece is meticulously crafted with mathematical precision.',
-    price: 2400,
-    category: 'Vector',
-    imageUrl: 'https://picsum.photos/seed/neo/1200/900',
-    author: 'Studio Echo',
-    fileSize: '45MB',
-    format: 'AI, SVG, PNG'
+    format: 'Premium Account Access'
   }
 ];
 
