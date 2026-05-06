@@ -19,11 +19,8 @@ export default function CheckoutPage() {
   const handleNext = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!auth.currentUser) {
-      try {
-        await signInWithGoogle();
-      } catch (error) {
-        return; // User cancelled or error
-      }
+      window.location.href = 'https://accounts.faizansaleem.studio/sign-in';
+      return;
     }
 
     if (formData.email && formData.phone && auth.currentUser) {

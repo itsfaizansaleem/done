@@ -50,12 +50,12 @@ export default function AccountPage() {
     await signOut(auth);
   };
 
-  const handleSignIn = async () => {
-    try {
-      await signInWithGoogle();
-    } catch (error) {
-      console.error("Sign in failed", error);
-    }
+  const handleSignIn = () => {
+    window.location.href = 'https://accounts.faizansaleem.studio/sign-in';
+  };
+
+  const handleSignUp = () => {
+    window.location.href = 'https://accounts.faizansaleem.studio/sign-up';
   };
 
   return (
@@ -196,10 +196,16 @@ export default function AccountPage() {
                   </div>
                   <div className="flex gap-4">
                     <button 
-                      onClick={handleSignIn}
+                      onClick={handleSignUp}
                       className="px-8 py-4 bg-white text-black text-[10px] font-bold uppercase tracking-widest hover:bg-neutral-200"
                     >
-                      Sign In with Google
+                      Sign Up
+                    </button>
+                    <button 
+                      onClick={handleSignIn}
+                      className="px-8 py-4 border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all"
+                    >
+                      Sign In
                     </button>
                   </div>
                 </div>
