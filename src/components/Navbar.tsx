@@ -1,20 +1,20 @@
 import { ShoppingCart, Search, Menu, User } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-brand-bg/80 backdrop-blur-md px-6 lg:px-12">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between">
         <div className="flex items-center gap-12">
-          <Link href="/" className="flex flex-col -gap-1">
+          <Link to="/" className="flex flex-col -gap-1">
             <span className="text-xl font-serif italic tracking-tight text-white leading-none">Faizan.</span>
             <span className="text-[8px] uppercase tracking-[0.4em] text-white/30 font-bold ml-1">Digital Solutions</span>
           </Link>
           
           <div className="hidden md:flex items-center gap-8 text-[10px] uppercase tracking-[0.2em] text-white/50">
-            <Link href="/explore" className="hover:text-white transition-colors">Marketplace</Link>
-            <Link href="/categories" className="hover:text-white transition-colors">Collections</Link>
-            <Link href="/pricing" className="hover:text-white transition-colors">Studio</Link>
+            <Link to="/explore" className="hover:text-white transition-colors">Marketplace</Link>
+            <Link to="/categories" className="hover:text-white transition-colors">Collections</Link>
+            <Link to="/pricing" className="hover:text-white transition-colors">Studio</Link>
           </div>
         </div>
 

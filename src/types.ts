@@ -3,7 +3,7 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  category: 'Vector' | 'Icon' | 'Texture' | 'Illustration' | 'Subscription' | 'UI Kit' | 'Typeface';
+  category: 'Vector' | 'Icon' | 'Texture' | 'Illustration';
   imageUrl: string;
   author: string;
   fileSize: string;
