@@ -1,21 +1,20 @@
-import { ShoppingCart, Search, Menu } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import { ShoppingCart, Search, Menu, User } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-brand-bg/80 backdrop-blur-md px-6 lg:px-12">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between">
         <div className="flex items-center gap-12">
-          <Link to="/" className="flex flex-col -gap-1">
+          <Link href="/" className="flex flex-col -gap-1">
             <span className="text-xl font-serif italic tracking-tight text-white leading-none">Faizan.</span>
             <span className="text-[8px] uppercase tracking-[0.4em] text-white/30 font-bold ml-1">Digital Solutions</span>
           </Link>
           
           <div className="hidden md:flex items-center gap-8 text-[10px] uppercase tracking-[0.2em] text-white/50">
-            <Link to="/explore" className="hover:text-white transition-colors">Marketplace</Link>
-            <Link to="/categories" className="hover:text-white transition-colors">Collections</Link>
-            <Link to="/pricing" className="hover:text-white transition-colors">Studio</Link>
+            <Link href="/explore" className="hover:text-white transition-colors">Marketplace</Link>
+            <Link href="/categories" className="hover:text-white transition-colors">Collections</Link>
+            <Link href="/pricing" className="hover:text-white transition-colors">Studio</Link>
           </div>
         </div>
 
@@ -35,23 +34,9 @@ export default function Navbar() {
               <ShoppingCart className="h-4 w-4 text-white/60 group-hover:text-white" />
             </button>
             
-            <SignedOut>
-              <SignInButton mode="modal">
-                <button className="px-6 py-2 border border-white/20 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300">
-                  Sign In
-                </button>
-              </SignInButton>
-            </SignedOut>
-            <SignedIn>
-              <UserButton 
-                appearance={{
-                  elements: {
-                    userButtonAvatarBox: "w-8 h-8 rounded-none border border-white/20",
-                    userButtonTrigger: "focus:shadow-none"
-                  }
-                }}
-              />
-            </SignedIn>
+            <button className="hidden sm:block px-6 py-2 border border-white/20 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300">
+              Account
+            </button>
           </div>
           
           <button className="md:hidden text-white/60">

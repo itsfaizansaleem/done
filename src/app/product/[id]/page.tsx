@@ -1,7 +1,10 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
+"use client";
+
+import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'motion/react';
 import { Check, Download, Share2, ShieldCheck, ArrowLeft, Tag, FileText, Maximize, User, Zap } from 'lucide-react';
-import { Product } from '../types';
+import { Product } from '../../../types';
+import Link from 'next/link';
 
 const MOCK_PRODUCTS: Product[] = [
   {
@@ -23,45 +26,51 @@ const MOCK_PRODUCTS: Product[] = [
     category: 'Vector',
     imageUrl: 'https://picsum.photos/seed/neo/1200/900',
     author: 'Studio Echo',
-    fileSize: '45MB',
-    format: 'AI, SVG, PNG'
+    fileSize: '142 MB',
+    format: 'AI, EPS, PNG'
   }
 ];
 
 export default function ProductPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const router = useRouter();
   const product = MOCK_PRODUCTS.find(p => p.id === id) || MOCK_PRODUCTS[0]; 
 
   const handleCheckout = () => {
-    navigate('/checkout', { state: { product } });
+    // In Next.js, we should handle persistent state differently, but for now we'll pass via URL or context if needed.
+    // However, given the instructions, I'll just push to checkout.
+    router.push(`/checkout?productId=${product.id}`);
   };
 
   return (
     <main className="min-h-screen bg-brand-bg py-12 lg:py-24 px-6 lg:px-12">
       <div className="mx-auto max-w-7xl">
-        <Link to="/" className="inline-flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 hover:text-white mb-12 transition-colors">
+        <Link 
+          href="/"
+          className="inline-flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 hover:text-white mb-20 transition-colors"
+        >
           <ArrowLeft className="h-4 w-4" />
-          Back to marketplace
+          Back to collection
         </Link>
-
-        <div className="grid lg:grid-cols-2 gap-24 items-start">
-          {/* Gallery Column */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="space-y-8"
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
+          {/* Visuals */}
+          <motion.div
+             initial={{ opacity: 0, x: -20 }}
+             animate={{ opacity: 1, x: 0 }}
+             className="space-y-12"
           >
-            <div className="aspect-[4/3] bg-brand-surface border border-white/5 relative group overflow-hidden">
+            <div className="aspect-[4/5] bg-brand-surface border border-white/5 overflow-hidden relative group">
               <img 
                 src={product.imageUrl} 
-                alt={product.name}
-                className="h-full w-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+                className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" 
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+              <div className="absolute top-6 right-6 p-4 bg-black/60 backdrop-blur-md border border-white/10 rounded-full">
+                <Maximize className="h-4 w-4 text-white/60" />
+              </div>
             </div>
-            
+
             <div className="grid grid-cols-4 gap-4">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="aspect-square bg-brand-surface border border-white/5 cursor-pointer hover:border-white/20 transition-colors overflow-hidden grayscale opacity-50 hover:grayscale-0 hover:opacity-100">
@@ -71,11 +80,10 @@ export default function ProductPage() {
             </div>
           </motion.div>
 
-          {/* Info Column */}
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex flex-col"
+          {/* Details */}
+          <motion.div
+             initial={{ opacity: 0, x: 20 }}
+             animate={{ opacity: 1, x: 0 }}
           >
             <div className="mb-12">
               <div className="flex items-center gap-6 mb-8 text-[10px] tracking-[0.3em] uppercase">
@@ -86,12 +94,11 @@ export default function ProductPage() {
                 <span className="text-white font-bold">{product.author}</span>
               </div>
               
-              <h1 className="text-5xl lg:text-7xl font-serif leading-[0.9] text-white mb-10">
-                {product.name.split(' ').slice(0, -1).join(' ')}<br/>
-                <span className="italic opacity-80">{product.name.split(' ').pop()}</span>
+              <h1 className="text-5xl lg:text-7xl font-serif italic text-white mb-8 leading-tight">
+                {product.name}
               </h1>
               
-              <p className="text-sm text-white/50 leading-loose font-sans font-light max-w-lg">
+              <p className="text-sm text-white/50 leading-loose font-light max-w-lg mb-12">
                 {product.description}
               </p>
             </div>
@@ -107,7 +114,7 @@ export default function ProductPage() {
                 </div>
               </div>
 
-              <div className="space-y-5 mb-12 text-[10px] uppercase tracking-[0.2em] text-white/60">
+              <div className="space-y-4 mb-10 text-[10px] uppercase tracking-widest text-white/60">
                 <div className="flex items-center gap-4">
                   <div className="h-1 w-1 bg-white/40 rounded-full" />
                   Lifetime Activation
@@ -130,7 +137,7 @@ export default function ProductPage() {
               </button>
             </div>
 
-            <div className="grid grid-cols-3 gap-12 pt-12 border-t border-white/10">
+            <div className="grid grid-cols-3 gap-12 pt-12 border-t border-white/5">
               <div>
                 <p className="text-[8px] font-bold text-white/20 uppercase tracking-[0.4em] mb-3">Delivery</p>
                 <div className="text-[10px] uppercase tracking-widest text-white">

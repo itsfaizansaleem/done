@@ -1,6 +1,6 @@
 import { Product } from '../types';
 import { Eye, Plus } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion } from 'motion/react';
 
 interface ProductCardProps {
@@ -15,7 +15,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       viewport={{ once: true }}
       className="group relative p-6 border-r border-white/10 hover:bg-white/[0.02] transition-colors"
     >
-      <Link to={`/product/${product.id}`} className="block">
+      <Link href={`/product/${product.id}`} className="block">
         <div className="h-48 bg-neutral-900 border border-white/5 mb-6 overflow-hidden relative">
           <img 
             src={product.imageUrl} 
