@@ -1,5 +1,6 @@
-import { ShoppingCart, Search, Menu, User } from 'lucide-react';
+import { ShoppingCart, Search, Menu } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 export default function Navbar() {
   return (
@@ -34,9 +35,23 @@ export default function Navbar() {
               <ShoppingCart className="h-4 w-4 text-white/60 group-hover:text-white" />
             </button>
             
-            <button className="hidden sm:block px-6 py-2 border border-white/20 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300">
-              Account
-            </button>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="px-6 py-2 border border-white/20 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300">
+                  Sign In
+                </button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton 
+                appearance={{
+                  elements: {
+                    userButtonAvatarBox: "w-8 h-8 rounded-none border border-white/20",
+                    userButtonTrigger: "focus:shadow-none"
+                  }
+                }}
+              />
+            </SignedIn>
           </div>
           
           <button className="md:hidden text-white/60">
