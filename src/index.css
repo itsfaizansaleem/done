@@ -5,14 +5,16 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Bodoni Moda", serif;
   
-  --color-brand-bg: #0A0A0A;
-  --color-brand-surface: #111111;
-  --color-brand-border: rgba(255, 255, 255, 0.1);
+  --color-brand-bg: #FFFFFF;
+  --color-brand-surface: #F8FAFC;
+  --color-brand-primary: #2563EB;
+  --color-brand-secondary: #1E40AF;
+  --color-brand-border: #E2E8F0;
 }
 
 @layer base {
   body {
-    @apply font-sans bg-brand-bg text-white antialiased;
+    @apply font-sans bg-brand-bg text-slate-900 antialiased;
   }
 }
 
